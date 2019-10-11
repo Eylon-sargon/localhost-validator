@@ -1,6 +1,6 @@
 {
     "name": "localhost-string-validator",
-    "version": "1.0.1",
+    "version": "1.0.15",
     "description": "Checks if sting is a valid local host i.e - https://localhost:5000",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
