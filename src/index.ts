@@ -1,74 +1,31 @@
 /**
- * Checks settings
- * @param exactPort : exact allowed port.
- * @param minPort : minimum allowed port range.
- * @param maxPort: maximum allowed port range.
- * @param checkProtocol: check if contains 'https://' or 'http://' at start of host string. Default is false
+ * @description Receives a url and checks if it is a valid localhost string. For example: localhost:7000 will be valid
+ * @param url
  */
-export interface Settings {
-    exactPort?: number;
-    minPort?: number;
-    maxPort?: number;
-    checkProtocol?: boolean;
-}
-
-const numberHost = (): boolean => {
-    // todo : https://github.com/jwerle/is-localhost
-    /*
-    ('127.0.0.1'); // true
-    ('12.34.56.78'); // false
-    ('::1'); // true
-  */
-
-    return true;
-};
-
-const stringHost = (host: string, settings: Settings): boolean => {
-    if (!host.includes("localhost:")) {
-        return false;
-    }
-    const split = host.split("localhost:");
-    const port = Number(split[1]);
-    if (port === 9050) {
-        console.log("is 9050");
-        return false;
-    }
-    // Not a valid protocoll
-    if (settings.checkProtocol && split[0] !== "https://" && split[0] !== "http://") {
+function islocalhost(url: string): boolean {
+    if (!url.includes("localhost:")) {
         return false;
     }
 
-    // Match defined port
-    if (settings.exactPort && port === settings.exactPort) {
-        return true;
-    }
+    const splitted = url.split("localhost:");
 
-    // Discard truethy values that may be parsed
-    if (port === 1 || port === 0) {
+    const protocol = splitted[0];
+    const port = Number(splitted[1]);
+
+    if (protocol !== "https://" && protocol !== "http://" && protocol !== "") {
         return false;
     }
 
-    // Is not in allowed port range
-    if (port < settings ? settings.minPort : 3000 || port > settings ? settings.maxPort : 9000) {
+    if (!Number.isInteger(port)) {
+        return false;
+    }
+
+    // Allowed port range
+    if (port < 1000 || port > 9999) {
         return false;
     }
 
     return true;
-};
-
-/**
- * Checks if a string is a valid localhost. eg - http://localhost:3000
- * @param host : host to test
- * @param settings : check settings (min/max allowed port nubmer or exact port)
- */
-export default function isLocalHost(
-    host: string,
-    settings: Settings = {
-        minPort: 3000,
-        maxPort: 9000,
-        checkProtocol: false,
-        exactPort: undefined,
-    }
-): boolean {
-    return stringHost(host, settings) && numberHost();
 }
+
+export default islocalhost;
