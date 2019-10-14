@@ -4,7 +4,7 @@ Validate if string is a proper localhost
 
 ## Getting Started
 
-`import isLocalHost from 'localhost-validator'`
+`import isLocalHost from 'localhost-string-validator'`
 
 ```
 isLocalHost('https://localhost:3000') // true
