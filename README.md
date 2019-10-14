@@ -1,4 +1,4 @@
-# localhost-validator
+# localhost-string-validator
 
 Validate if string is a proper localhost
 
@@ -14,7 +14,7 @@ isLocalHost('https://host.com') // false
 ### Installing
 
 ```
-npm i --save localhost-validator
+npm i --save localhost-string-validator
 ```
 
 ## Running the tests
